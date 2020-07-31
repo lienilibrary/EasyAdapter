@@ -31,25 +31,6 @@ public class RecyclerViewHelper {
         builder.recyclerView.setLayoutManager(builder.manager);
         builder.recyclerView.setAdapter(builder.adapter);
 
-        if(builder.onFirstRefreshListener!=null) {
-            //设置加载失败点击事件
-            builder.adapter.setOnTopReloadListener(new OnItemChildClickListener() {
-                @Override
-                public void onClick(View v, int position) {
-                    builder.onFirstRefreshListener.onFirstRefresh();
-                }
-            });
-            //设置refreshLayout监听
-            if(builder.refreshLayout!=null) {
-                builder.refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                        builder.onFirstRefreshListener.onFirstRefresh();
-                    }
-                });
-                builder.adapter.setRefreshLayout(builder.refreshLayout);
-            }
-        }
 
         if(builder.onLoadMoreListener!=null) {
             //底部加载失败点击事件
@@ -78,6 +59,26 @@ public class RecyclerViewHelper {
                         }
                     }
                 });
+            }
+        }
+
+        if(builder.onFirstRefreshListener!=null) {
+            //设置加载失败点击事件
+            builder.adapter.setOnTopReloadListener(new OnItemChildClickListener() {
+                @Override
+                public void onClick(View v, int position) {
+                    builder.onFirstRefreshListener.onFirstRefresh();
+                }
+            });
+            //设置refreshLayout监听
+            if(builder.refreshLayout!=null) {
+                builder.refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        builder.onFirstRefreshListener.onFirstRefresh();
+                    }
+                });
+                builder.adapter.setRefreshLayout(builder.refreshLayout);
             }
         }
 
@@ -120,7 +121,6 @@ public class RecyclerViewHelper {
     }
 
     public static Builder create(RecyclerView recyclerView,BaseEasyAdapter adapter){
-
         return create(recyclerView,null,adapter);
     }
     public static Builder create(Activity activity, int recyclerViewResId, BaseEasyAdapter adapter){
@@ -207,6 +207,12 @@ public class RecyclerViewHelper {
 
         public Builder setLayoutManager(RecyclerView.LayoutManager layoutManager) {
             this.manager = layoutManager;
+            return this;
+        }
+
+        //禁用手动刷新
+        public Builder disableRefreshLayout(){
+            if(refreshLayout!=null) refreshLayout.setEnabled(false);
             return this;
         }
         public RecyclerViewHelper init(){

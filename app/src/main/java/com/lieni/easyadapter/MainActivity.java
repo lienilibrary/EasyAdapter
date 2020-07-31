@@ -2,10 +2,10 @@ package com.lieni.easyadapter;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.TextView;
 
 import com.lieni.easyadapter.entity.User;
 import com.lieni.library.easyadapter.BaseEasyAdapter;
@@ -17,35 +17,52 @@ import com.lieni.library.easyadapter.listener.OnLoadMoreListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnFirstRefreshListener,OnLoadMoreListener{
     private BaseEasyAdapter<User> adapter;
     private int page=1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        sample1();
+        sample2();
+    }
+    private void sample1(){
         adapter=new BaseEasyAdapter<User>(R.layout.item_test) {
             @Override
             public void onBind(@NonNull EasyHolder holder, int position) {
             }
         };
-        adapter.setNoMoreText("没有了");
-        RecyclerViewHelper.create(this,R.id.rvTest,R.id.spTest, adapter)
-                .setOnFirstRefreshListener(new OnFirstRefreshListener() {
-                    @Override
-                    public void onFirstRefresh() {
-                        page=1;
-                        getData();
-                    }
-                })
-                .setOnLoadMoreListener(new OnLoadMoreListener() {
-                    @Override
-                    public void onLoadMore() {
-                        getData();
-                    }
-                })
+        RecyclerViewHelper.create(this,R.id.rvTest,adapter)
+                .setOnFirstRefreshListener(this)
+                .setOnLoadMoreListener(this)
                 .init().firstRefresh();
     }
+    private void sample2(){
+        adapter=new BaseEasyAdapter<User>(R.layout.item_test) {
+            @Override
+            public void onBind(@NonNull EasyHolder holder, int position) {
+                holder.getView(R.id.tvText,TextView.class).setText("111");
+            }
+        };
+        RecyclerViewHelper.create(this,R.id.rvTest,R.id.spTest, adapter)
+                .setOnFirstRefreshListener(this)
+                .setOnLoadMoreListener(this)
+                .disableRefreshLayout()
+                .init().firstRefresh();
+    }
+
+    @Override
+    public void onFirstRefresh() {
+        page=1;
+        getData();
+    }
+
+    @Override
+    public void onLoadMore() {
+        getData();
+    }
+
     private void getData(){
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -57,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
                 adapter.notifyLoadingCompleted(users,page==1,page==3);
                 page++;
             }
-        },5000);
+        },2000);
     }
+
 }

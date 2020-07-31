@@ -38,6 +38,23 @@ public class EasyHolder extends RecyclerView.ViewHolder implements View.OnClickL
         return (T) view;
     }
 
+    public <T> T getView(@IdRes int viewId,Class<T> clz){
+        View view = views.get(viewId);
+        if (view == null) {
+            view = itemView.findViewById(viewId);
+            views.put(viewId, view);
+        }
+        if(clz.isInstance(view)) {
+            return clz.cast(view);
+        }
+        else {
+            return null;
+        }
+
+    }
+
+
+
 
     protected EasyHolder addOnItemChildClickListener(@IdRes int viewId, OnItemChildClickListener listener){
         View view=getView(viewId);
