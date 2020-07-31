@@ -16,7 +16,7 @@ public class DefaultAdapterSetting {
     public static int EMPTY_IMAGE=R.drawable.ic_empty;
     public static int NET_ERROR_IMAGE=R.drawable.ic_net_error;
 
-    public static void init(int emptyLayout,int centerErrorLayout,int centerLoadingLayout,
+    public static void initLayout(int emptyLayout,int centerErrorLayout,int centerLoadingLayout,
                             int bottomErrorLayout,int bottomLoadingLayout,int bottomCompleteLayout){
         EMPTY_LAYOUT=emptyLayout;
         CENTER_ERROR_LAYOUT=centerErrorLayout;
@@ -24,9 +24,6 @@ public class DefaultAdapterSetting {
         BOTTOM_ERROR_LAYOUT=bottomErrorLayout;
         BOTTOM_LOADING_LAYOUT=bottomLoadingLayout;
         BOTTOM_COMPLETE_LAYOUT=bottomCompleteLayout;
-    }
-    public static void initLayout(int emptyLayout){
-        EMPTY_LAYOUT=emptyLayout;
     }
     public static void initText(String emptyText,String noMoreText){
         EMPTY_TEXT=emptyText;
