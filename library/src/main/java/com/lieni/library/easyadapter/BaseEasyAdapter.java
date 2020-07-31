@@ -1,10 +1,11 @@
 package com.lieni.library.easyadapter;
 
-import android.content.Context;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.ImageView;
+import android.widget.TextView;
 
 
 import java.util.ArrayList;
@@ -29,7 +30,6 @@ import com.lieni.library.easyadapter.model.AdapterSetting;
 public abstract class BaseEasyAdapter<E> extends RecyclerView.Adapter<EasyHolder> {
     private List<E> listData=new ArrayList<>();
     private int footerItemType=ITEM_TYPE_FOOT_DEFAULT;
-    private Context context;
 
     private boolean showFooter=true;
 
@@ -68,17 +68,15 @@ public abstract class BaseEasyAdapter<E> extends RecyclerView.Adapter<EasyHolder
 
 
 
+    public BaseEasyAdapter(int layoutResId){
+        this(layoutResId,new AdapterSetting());
+    }
 
-
-    public BaseEasyAdapter(Context context, int layoutResId, AdapterSetting setting){
-        this.context=context;
+    public BaseEasyAdapter(int layoutResId, AdapterSetting setting){
         this.layoutResId=layoutResId;
         this.setting=setting;
         clickListeners=new SparseArray<>();
         longClickListeners=new SparseArray<>();
-    }
-    public BaseEasyAdapter(Context context,int layoutResId){
-        this(context,layoutResId,new AdapterSetting());
     }
 
     /**
@@ -98,6 +96,10 @@ public abstract class BaseEasyAdapter<E> extends RecyclerView.Adapter<EasyHolder
             notifyItemChanged(position);
         }
     }
+    public void addData(E item){
+        addData(item,listData.size());
+    }
+
     public void addData(E item,int position){
         if(position<=listData.size()&&position>-1&&item!=null){
             if(listData.size()==0) {
@@ -113,14 +115,6 @@ public abstract class BaseEasyAdapter<E> extends RecyclerView.Adapter<EasyHolder
             notifyDataSetChanged();
         }
     }
-
-    //    public void addData(E item){
-//        if(item!=null){
-//            if(listData.size()==0) setFooterItemType(ITEM_TYPE_FOOT_END);
-//            listData.add(item);
-//            notifyItemInserted(listData.size()-1);
-//        }
-//    }
 
     public E getItem(int position){
         return listData.get(position);
@@ -251,21 +245,21 @@ public abstract class BaseEasyAdapter<E> extends RecyclerView.Adapter<EasyHolder
         }else {
             switch (viewType){
                 case ITEM_TYPE_FOOT_END:
-                    return new EasyHolder(LayoutInflater.from(parent.getContext()).inflate(setting.getEndLayoutResId(), parent, false));
+                    return new EasyHolder(LayoutInflater.from(parent.getContext()).inflate(setting.getBottomCompleteLayoutResId(), parent, false));
                 case ITEM_TYPE_FOOT_LOADING_TOP:
-                    return new EasyHolder(LayoutInflater.from(parent.getContext()).inflate(setting.getTopLoadingLayoutResId(), parent, false));
+                    return new EasyHolder(LayoutInflater.from(parent.getContext()).inflate(setting.getCenterLoadingLayoutResId(), parent, false));
                 case ITEM_TYPE_FOOT_LOADING_BOTTOM:
                     return new EasyHolder(LayoutInflater.from(parent.getContext()).inflate(setting.getBottomLoadingLayoutResId(), parent, false));
                 case ITEM_TYPE_FOOT_EMPTY:
-                    return new EasyHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_footer_empty, parent, false));
+                    return new EasyHolder(LayoutInflater.from(parent.getContext()).inflate(setting.getEmptyLayoutResId(), parent, false));
                 case ITEM_TYPE_FOOT_NET_ERROR_TOP:
-                    EasyHolder topErrorHolder=new EasyHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_footer_net_error_top, parent, false));
+                    EasyHolder topErrorHolder=new EasyHolder(LayoutInflater.from(parent.getContext()).inflate(setting.getCenterErrorLayoutResId(), parent, false));
                     if(onTopReloadListener!=null) {
                         topErrorHolder.addOnItemChildClickListener(R.id.item_footer_error_reload,onTopReloadListener);
                     }
                     return topErrorHolder;
                 case ITEM_TYPE_FOOT_NET_ERROR_BOTTOM:
-                    EasyHolder bottomErrorHolder=new EasyHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_footer_net_error_bottom, parent, false));
+                    EasyHolder bottomErrorHolder=new EasyHolder(LayoutInflater.from(parent.getContext()).inflate(setting.getBottomErrorLayoutResId(), parent, false));
                     if(onBottomReloadListener!=null) {
                         bottomErrorHolder.addOnItemChildClickListener(R.id.item_footer_error_reload,onBottomReloadListener);
                     }
@@ -281,11 +275,26 @@ public abstract class BaseEasyAdapter<E> extends RecyclerView.Adapter<EasyHolder
         int viewType=holder.getItemViewType();
         switch (viewType){
             case ITEM_TYPE_FOOT_END:
-//                ((TextView)holder.getView(R.id.item_footer_end_text)).setText(endHint);
+                View completeText=holder.getView(R.id.item_footer_complete_text);
+                if(completeText instanceof TextView){
+                    ((TextView)completeText).setText(setting.getNoMoreText());
+                }
                 break;
             case ITEM_TYPE_FOOT_EMPTY:
-//                ((TextView)holder.getView(R.id.item_footer_empty_text)).setText(emptyHint);
-//                if(emptyImgRes>0) ((ImageView)holder.getView(R.id.item_footer_empty_image)).setImageResource(emptyImgRes);
+                View emptyText=holder.getView(R.id.item_footer_empty_text);
+                if(emptyText instanceof TextView){
+                    ((TextView)emptyText).setText(setting.getEmptyText());
+                }
+                View emptyImage=holder.getView(R.id.item_footer_empty_image);
+                if(emptyImage instanceof ImageView){
+                    ((ImageView)emptyImage).setImageResource(setting.getEmptyImage());
+                }
+                break;
+            case ITEM_TYPE_FOOT_NET_ERROR_TOP:
+                View errorImage=holder.getView(R.id.item_footer_error_image);
+                if(errorImage instanceof ImageView){
+                    ((ImageView)errorImage).setImageResource(setting.getNetErrorImage());
+                }
                 break;
             case ITEM_TYPE_LIST:
                 onBind(holder,position);
@@ -318,10 +327,6 @@ public abstract class BaseEasyAdapter<E> extends RecyclerView.Adapter<EasyHolder
      */
     public abstract void onBind(@NonNull EasyHolder holder, int position);
 
-    public Context getContext() {
-        return context;
-    }
-
     public List<E> getListData() {
         return listData;
     }
@@ -338,7 +343,21 @@ public abstract class BaseEasyAdapter<E> extends RecyclerView.Adapter<EasyHolder
         this.refreshLayout = refreshLayout;
     }
 
-    public void setShowFooter(boolean showFooter) {
+    public BaseEasyAdapter setShowFooter(boolean showFooter) {
         this.showFooter = showFooter;
+        return this;
     }
+    public BaseEasyAdapter setEmptyText(String emptyText){
+        this.setting.setEmptyText(emptyText);
+        return this;
+    }
+    public BaseEasyAdapter setEmptyImage(int emptyImage){
+        this.setting.setEmptyImage(emptyImage);
+        return this;
+    }
+    public BaseEasyAdapter setNoMoreText(String text){
+        this.setting.setNoMoreText(text);
+        return this;
+    }
+
 }

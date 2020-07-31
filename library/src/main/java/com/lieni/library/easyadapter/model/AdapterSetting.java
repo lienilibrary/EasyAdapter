@@ -1,83 +1,132 @@
 package com.lieni.library.easyadapter.model;
 
-
-import com.lieni.library.easyadapter.R;
-
 public class AdapterSetting {
     private int emptyLayoutResId;
-    private int topErrorLayoutResId;
-    private int bottomErrorLayoutResId;
-    private int topLoadingLayoutResId;
+    private int centerErrorLayoutResId;
+    private int centerLoadingLayoutResId;
     private int bottomLoadingLayoutResId;
-    private int endLayoutResId;
+    private int bottomErrorLayoutResId;
+    private int bottomCompleteLayoutResId;
     private int defaultLayoutResId;
 
+    private String emptyText;
+    private String noMoreText;
 
+    private int emptyImage;
+    private int netErrorImage;
 
     public AdapterSetting() {
-        this.emptyLayoutResId = R.layout.item_footer_empty;
-        this.topErrorLayoutResId = R.layout.item_footer_net_error_top;
-        this.bottomErrorLayoutResId = R.layout.item_footer_net_error_bottom;
-        this.topLoadingLayoutResId = R.layout.item_footer_loading_top;
-        this.bottomLoadingLayoutResId = R.layout.item_footer_loading_bottom;
-        this.endLayoutResId=R.layout.item_footer_end;
-        this.defaultLayoutResId=R.layout.item_footer_default;
+        this.emptyLayoutResId = DefaultAdapterSetting.EMPTY_LAYOUT;
+        this.centerErrorLayoutResId = DefaultAdapterSetting.CENTER_ERROR_LAYOUT;
+        this.centerLoadingLayoutResId = DefaultAdapterSetting.CENTER_LOADING_LAYOUT;
+        this.bottomErrorLayoutResId = DefaultAdapterSetting.BOTTOM_ERROR_LAYOUT;
+        this.bottomLoadingLayoutResId = DefaultAdapterSetting.BOTTOM_LOADING_LAYOUT;
+        this.bottomCompleteLayoutResId= DefaultAdapterSetting.BOTTOM_COMPLETE_LAYOUT;
+        this.defaultLayoutResId= DefaultAdapterSetting.DEFAULT_LAYOUT;
 
+        this.emptyText=DefaultAdapterSetting.EMPTY_TEXT;
+        this.noMoreText=DefaultAdapterSetting.NO_MORE_TEXT;
+
+        this.emptyImage=DefaultAdapterSetting.EMPTY_IMAGE;
+        this.netErrorImage=DefaultAdapterSetting.NET_ERROR_IMAGE;
     }
 
     public int getEmptyLayoutResId() {
         return emptyLayoutResId;
     }
 
-    public void setEmptyLayoutResId(int emptyLayoutResId) {
+    public AdapterSetting setEmptyLayoutResId(int emptyLayoutResId) {
         this.emptyLayoutResId = emptyLayoutResId;
+        return this;
     }
 
-    public int getTopErrorLayoutResId() {
-        return topErrorLayoutResId;
+    public int getCenterErrorLayoutResId() {
+        return centerErrorLayoutResId;
     }
 
-    public void setTopErrorLayoutResId(int topErrorLayoutResId) {
-        this.topErrorLayoutResId = topErrorLayoutResId;
+    public AdapterSetting setCenterErrorLayoutResId(int centerErrorLayoutResId) {
+        this.centerErrorLayoutResId = centerErrorLayoutResId;
+        return this;
     }
 
-    public int getBottomErrorLayoutResId() {
-        return bottomErrorLayoutResId;
+    public int getCenterLoadingLayoutResId() {
+        return centerLoadingLayoutResId;
     }
 
-    public void setBottomErrorLayoutResId(int bottomErrorLayoutResId) {
-        this.bottomErrorLayoutResId = bottomErrorLayoutResId;
-    }
-
-    public int getTopLoadingLayoutResId() {
-        return topLoadingLayoutResId;
-    }
-
-    public void setTopLoadingLayoutResId(int topLoadingLayoutResId) {
-        this.topLoadingLayoutResId = topLoadingLayoutResId;
+    public AdapterSetting setCenterLoadingLayoutResId(int centerLoadingLayoutResId) {
+        this.centerLoadingLayoutResId = centerLoadingLayoutResId;
+        return this;
     }
 
     public int getBottomLoadingLayoutResId() {
         return bottomLoadingLayoutResId;
     }
 
-    public void setBottomLoadingLayoutResId(int bottomLoadingLayoutResId) {
+    public AdapterSetting setBottomLoadingLayoutResId(int bottomLoadingLayoutResId) {
         this.bottomLoadingLayoutResId = bottomLoadingLayoutResId;
+        return this;
     }
 
-    public int getEndLayoutResId() {
-        return endLayoutResId;
+    public int getBottomErrorLayoutResId() {
+        return bottomErrorLayoutResId;
     }
 
-    public void setEndLayoutResId(int endLayoutResId) {
-        this.endLayoutResId = endLayoutResId;
+    public AdapterSetting setBottomErrorLayoutResId(int bottomErrorLayoutResId) {
+        this.bottomErrorLayoutResId = bottomErrorLayoutResId;
+        return this;
+    }
+
+    public int getBottomCompleteLayoutResId() {
+        return bottomCompleteLayoutResId;
+    }
+
+    public AdapterSetting setBottomCompleteLayoutResId(int bottomCompleteLayoutResId) {
+        this.bottomCompleteLayoutResId = bottomCompleteLayoutResId;
+        return this;
     }
 
     public int getDefaultLayoutResId() {
         return defaultLayoutResId;
     }
 
-    public void setDefaultLayoutResId(int defaultLayoutResId) {
+    public AdapterSetting setDefaultLayoutResId(int defaultLayoutResId) {
         this.defaultLayoutResId = defaultLayoutResId;
+        return this;
+    }
+
+    public String getEmptyText() {
+        return emptyText;
+    }
+
+    public AdapterSetting setEmptyText(String emptyText) {
+        this.emptyText = emptyText;
+        return this;
+    }
+
+    public String getNoMoreText() {
+        return noMoreText;
+    }
+
+    public AdapterSetting setNoMoreText(String noMoreText) {
+        this.noMoreText = noMoreText;
+        return this;
+    }
+
+    public int getEmptyImage() {
+        return emptyImage;
+    }
+
+    public AdapterSetting setEmptyImage(int emptyImage) {
+        this.emptyImage = emptyImage;
+        return this;
+    }
+
+    public int getNetErrorImage() {
+        return netErrorImage;
+    }
+
+    public AdapterSetting setNetErrorImage(int netErrorImage) {
+        this.netErrorImage = netErrorImage;
+        return this;
     }
 }

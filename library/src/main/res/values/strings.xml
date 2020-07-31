@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">library</string>
+    <string name="hint_data_empty">暂时还没有数据</string>
+    <string name="hint_data_end">没有更多数据了</string>
+    <string name="hint_net_error">网络错误，请稍后再试</string>
+    <string name="hint_bottom_reload">加载失败，点击重试</string>
+    <string name="hint_top_reload">重新加载</string>
 </resources>
