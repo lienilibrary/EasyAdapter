@@ -16,19 +16,19 @@ public class AdapterSetting {
     private int netErrorImage;
 
     public AdapterSetting() {
-        this.emptyLayoutResId = DefaultAdapterSetting.EMPTY_LAYOUT;
-        this.centerErrorLayoutResId = DefaultAdapterSetting.CENTER_ERROR_LAYOUT;
-        this.centerLoadingLayoutResId = DefaultAdapterSetting.CENTER_LOADING_LAYOUT;
-        this.bottomErrorLayoutResId = DefaultAdapterSetting.BOTTOM_ERROR_LAYOUT;
-        this.bottomLoadingLayoutResId = DefaultAdapterSetting.BOTTOM_LOADING_LAYOUT;
-        this.bottomCompleteLayoutResId= DefaultAdapterSetting.BOTTOM_COMPLETE_LAYOUT;
-        this.defaultLayoutResId= DefaultAdapterSetting.DEFAULT_LAYOUT;
+        this.emptyLayoutResId = EasyAdapterSetting.EMPTY_LAYOUT;
+        this.centerErrorLayoutResId = EasyAdapterSetting.CENTER_ERROR_LAYOUT;
+        this.centerLoadingLayoutResId = EasyAdapterSetting.CENTER_LOADING_LAYOUT;
+        this.bottomErrorLayoutResId = EasyAdapterSetting.BOTTOM_ERROR_LAYOUT;
+        this.bottomLoadingLayoutResId = EasyAdapterSetting.BOTTOM_LOADING_LAYOUT;
+        this.bottomCompleteLayoutResId= EasyAdapterSetting.BOTTOM_COMPLETE_LAYOUT;
+        this.defaultLayoutResId= EasyAdapterSetting.DEFAULT_LAYOUT;
 
-        this.emptyText=DefaultAdapterSetting.EMPTY_TEXT;
-        this.noMoreText=DefaultAdapterSetting.NO_MORE_TEXT;
+        this.emptyText= EasyAdapterSetting.EMPTY_TEXT;
+        this.noMoreText= EasyAdapterSetting.NO_MORE_TEXT;
 
-        this.emptyImage=DefaultAdapterSetting.EMPTY_IMAGE;
-        this.netErrorImage=DefaultAdapterSetting.NET_ERROR_IMAGE;
+        this.emptyImage= EasyAdapterSetting.EMPTY_IMAGE;
+        this.netErrorImage= EasyAdapterSetting.NET_ERROR_IMAGE;
     }
 
     public int getEmptyLayoutResId() {

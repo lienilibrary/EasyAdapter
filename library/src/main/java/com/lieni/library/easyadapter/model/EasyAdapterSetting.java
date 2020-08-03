@@ -2,7 +2,7 @@ package com.lieni.library.easyadapter.model;
 
 import com.lieni.library.easyadapter.R;
 
-public class DefaultAdapterSetting {
+public class EasyAdapterSetting {
     public static int EMPTY_LAYOUT= R.layout.item_footer_empty;
     public static int CENTER_ERROR_LAYOUT= R.layout.item_footer_net_error_top;
     public static int CENTER_LOADING_LAYOUT= R.layout.item_footer_loading_top;

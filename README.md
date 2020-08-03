@@ -1,7 +1,7 @@
 # Download
 
 ```css
-implementation 'com.github.lienilibrary:EasyAdapter:1.0.0'
+implementation 'com.github.lienilibrary:EasyAdapter:1.0.2'
 ```
 
 # Usage
@@ -131,11 +131,11 @@ adapter.addOnItemChildLongClickListener(R.id.tvText, new OnItemChildLongClickLis
 
 ```
 //可选 全局布局配置(空,加载中(中心，底部)，异常(中心，底部))
-DefaultAdapterSetting.initLayout();
+EasyAdapterSetting.initLayout();
 //可选 全局图片配置(空,异常)
-DefaultAdapterSetting.initImage();
+EasyAdapterSetting.initImage();
 //可选 全局文字配置(空,底部没有更多)
-DefaultAdapterSetting.initText();
+EasyAdapterSetting.initText();
 ```
 
 ##### Specific
