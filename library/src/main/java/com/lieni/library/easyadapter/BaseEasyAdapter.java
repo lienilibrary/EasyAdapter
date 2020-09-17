@@ -1,5 +1,6 @@
 package com.lieni.library.easyadapter;
 
+import android.text.TextUtils;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -277,7 +278,8 @@ public abstract class BaseEasyAdapter<E> extends RecyclerView.Adapter<EasyHolder
             case ITEM_TYPE_FOOT_END:
                 View completeText=holder.getView(R.id.item_footer_complete_text);
                 if(completeText instanceof TextView){
-                    ((TextView)completeText).setText(setting.getNoMoreText());
+                    ((TextView)completeText).setText(setting.getNoMoreText()!=null?setting.getNoMoreText():"");
+                    completeText.setVisibility(TextUtils.isEmpty(setting.getNoMoreText())?View.GONE:View.VISIBLE);
                 }
                 break;
             case ITEM_TYPE_FOOT_EMPTY:

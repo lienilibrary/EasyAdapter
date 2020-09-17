@@ -97,10 +97,11 @@ public class MainActivity extends AppCompatActivity implements OnFirstRefreshLis
     private void sample3(){
         //adapter已全局定义
 
-        BaseEasyAdapter<String> adapter=new BaseEasyAdapter<String>(R.layout.item_test) {
+        adapter=new BaseEasyAdapter<String>(R.layout.item_test) {
             @Override
             public void onBind(@NonNull EasyHolder holder, int position) { }
         };
+        adapter.setNoMoreText("");
         RecyclerViewHelper.create(this,R.id.recyclerView,R.id.swipeRefreshLayout, adapter)
                 .setOnFirstRefreshListener(new OnFirstRefreshListener() {
                     @Override
