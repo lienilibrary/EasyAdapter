@@ -1,7 +1,7 @@
 # Download
 
 ```css
-implementation 'com.github.lienilibrary:EasyAdapter:1.0.2'
+implementation 'com.github.lienilibrary:EasyAdapter:1.0.4'
 ```
 
 # Usage
