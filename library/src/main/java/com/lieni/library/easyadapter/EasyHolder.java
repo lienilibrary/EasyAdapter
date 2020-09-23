@@ -19,15 +19,17 @@ public class EasyHolder extends RecyclerView.ViewHolder implements View.OnClickL
 
     private SparseArray<OnItemChildLongClickListener> longClickListeners;
     private OnItemLongClickListener onItemLongClickListener;
+
     public EasyHolder(@NonNull View itemView) {
         super(itemView);
-        this.views=new SparseArray<>();
-        this.clickListeners=new SparseArray<>();
-        this.longClickListeners=new SparseArray<>();
+        this.views = new SparseArray<>();
+        this.clickListeners = new SparseArray<>();
+        this.longClickListeners = new SparseArray<>();
 
         itemView.setOnClickListener(this);
         itemView.setOnLongClickListener(this);
     }
+
     @SuppressWarnings("unchecked")
     public <T extends View> T getView(@IdRes int viewId) {
         View view = views.get(viewId);
@@ -38,48 +40,46 @@ public class EasyHolder extends RecyclerView.ViewHolder implements View.OnClickL
         return (T) view;
     }
 
-    public <T> T getView(@IdRes int viewId,Class<T> clz){
+    public <T> T getView(@IdRes int viewId, Class<T> clz) {
         View view = views.get(viewId);
         if (view == null) {
             view = itemView.findViewById(viewId);
             views.put(viewId, view);
         }
-        if(clz.isInstance(view)) {
+        if (clz.isInstance(view)) {
             return clz.cast(view);
-        }
-        else {
+        } else {
             return null;
         }
-
     }
 
 
-
-
-    protected EasyHolder addOnItemChildClickListener(@IdRes int viewId, OnItemChildClickListener listener){
-        View view=getView(viewId);
+    protected EasyHolder addOnItemChildClickListener(@IdRes int viewId, OnItemChildClickListener listener) {
+        View view = getView(viewId);
         view.setOnClickListener(this);
-        clickListeners.put(viewId,listener);
+        clickListeners.put(viewId, listener);
         return this;
     }
-    protected EasyHolder addOnItemChildClickListeners(SparseArray<OnItemChildClickListener> listeners){
-        for(int i=0;i<listeners.size();i++){
-            int key=listeners.keyAt(i);
-            addOnItemChildClickListener(key,listeners.get(key));
+
+    protected EasyHolder addOnItemChildClickListeners(SparseArray<OnItemChildClickListener> listeners) {
+        for (int i = 0; i < listeners.size(); i++) {
+            int key = listeners.keyAt(i);
+            addOnItemChildClickListener(key, listeners.get(key));
         }
         return this;
     }
 
-    protected EasyHolder addOnItemChildLongClickListener(@IdRes int viewId, OnItemChildLongClickListener listener){
-        View view=getView(viewId);
+    protected EasyHolder addOnItemChildLongClickListener(@IdRes int viewId, OnItemChildLongClickListener listener) {
+        View view = getView(viewId);
         view.setOnLongClickListener(this);
-        longClickListeners.put(viewId,listener);
+        longClickListeners.put(viewId, listener);
         return this;
     }
-    protected EasyHolder addOnItemChildLongClickListeners(SparseArray<OnItemChildLongClickListener> listeners){
-        for(int i=0;i<listeners.size();i++){
-            int key=listeners.keyAt(i);
-            addOnItemChildLongClickListener(key,listeners.get(key));
+
+    protected EasyHolder addOnItemChildLongClickListeners(SparseArray<OnItemChildLongClickListener> listeners) {
+        for (int i = 0; i < listeners.size(); i++) {
+            int key = listeners.keyAt(i);
+            addOnItemChildLongClickListener(key, listeners.get(key));
         }
         return this;
     }
@@ -96,26 +96,24 @@ public class EasyHolder extends RecyclerView.ViewHolder implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        OnItemChildClickListener onItemChildClickListener=clickListeners.get(v.getId());
-        if(onItemChildClickListener!=null) {
-            onItemChildClickListener.onClick(v,getAdapterPosition());
-        }
-        else if(onItemClickListener!=null) {
-            onItemClickListener.onClick(v,getAdapterPosition());
+        OnItemChildClickListener onItemChildClickListener = clickListeners.get(v.getId());
+        if (onItemChildClickListener != null) {
+            onItemChildClickListener.onClick(v, getAdapterPosition());
+        } else if (onItemClickListener != null) {
+            onItemClickListener.onClick(v, getAdapterPosition());
         }
     }
 
     @Override
     public boolean onLongClick(View v) {
-        OnItemChildLongClickListener onItemChildLongClickListener=longClickListeners.get(v.getId());
-        if(onItemChildLongClickListener!=null){
-            onItemChildLongClickListener.onLongClick(v,getAdapterPosition());
+        OnItemChildLongClickListener onItemChildLongClickListener = longClickListeners.get(v.getId());
+        if (onItemChildLongClickListener != null) {
+            onItemChildLongClickListener.onLongClick(v, getAdapterPosition());
             return true;
-        }else if(onItemLongClickListener!=null){
-            onItemLongClickListener.onLongClick(v,getAdapterPosition());
+        } else if (onItemLongClickListener != null) {
+            onItemLongClickListener.onLongClick(v, getAdapterPosition());
             return true;
         }
-
         return false;
     }
 }
