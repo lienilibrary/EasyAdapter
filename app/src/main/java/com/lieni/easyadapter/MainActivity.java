@@ -117,7 +117,6 @@ public class MainActivity extends AppCompatActivity implements OnFirstRefreshLis
                     }
                 })
                 .addSpaceDecoration(40)
-                .disableRefreshLayout()
                 .init().firstRefresh();
     }
 
