@@ -2,6 +2,7 @@ package com.lieni.easyadapter;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -96,12 +97,11 @@ public class MainActivity extends AppCompatActivity implements OnFirstRefreshLis
     }
     private void sample3(){
         //adapter已全局定义
-
         adapter=new BaseEasyAdapter<String>(R.layout.item_test) {
             @Override
             public void onBind(@NonNull EasyHolder holder, int position) { }
         };
-        adapter.setNoMoreText("");
+        adapter.setNoMoreText("没有更多数据了");
         RecyclerViewHelper.create(this,R.id.recyclerView,R.id.swipeRefreshLayout, adapter)
                 .setOnFirstRefreshListener(new OnFirstRefreshListener() {
                     @Override
@@ -116,7 +116,8 @@ public class MainActivity extends AppCompatActivity implements OnFirstRefreshLis
                         getData();
                     }
                 })
-                .addSpaceDecoration(40)
+                .setLayoutManager(new GridLayoutManager(this,2))
+                .addSpaceDecoration(40,10)
                 .init().firstRefresh();
     }
 
@@ -132,17 +133,18 @@ public class MainActivity extends AppCompatActivity implements OnFirstRefreshLis
     }
 
     private void getData(){
+//        adapter.notifyLoadingFailed();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 List<String> strings=new ArrayList<>();
-                for (int i=0;i<15;i++) {
+                for (int i=0;i<20;i++) {
                     strings.add("string "+i);
                 }
                 adapter.notifyLoadingCompleted(strings,page==1,page==3);
                 page++;
             }
-        },2000);
+        },1000);
     }
 
 }

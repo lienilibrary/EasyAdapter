@@ -38,7 +38,7 @@ public class RecyclerViewHelper {
 
         builder.recyclerView.setLayoutManager(builder.manager);
         builder.recyclerView.setAdapter(builder.adapter);
-        if(builder.decoration!=null){
+        if (builder.decoration != null) {
             builder.recyclerView.addItemDecoration(builder.decoration);
         }
 
@@ -219,7 +219,17 @@ public class RecyclerViewHelper {
             return manager;
         }
 
-        public Builder setLayoutManager(RecyclerView.LayoutManager layoutManager) {
+        public Builder setLayoutManager(final RecyclerView.LayoutManager layoutManager) {
+            //适配多布局底部和顶部
+            if (layoutManager instanceof GridLayoutManager) {
+                ((GridLayoutManager) layoutManager).setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                    @Override
+                    public int getSpanSize(int position) {
+                        if (adapter.isListItem(position)) return 1;
+                        else return ((GridLayoutManager) layoutManager).getSpanCount();
+                    }
+                });
+            }
             this.manager = layoutManager;
             return this;
         }
@@ -239,24 +249,24 @@ public class RecyclerViewHelper {
             return this;
         }
 
-        public Builder addSpaceDecoration(int verticalSpace){
-            return addSpaceDecoration(verticalSpace,0);
+        public Builder addSpaceDecoration(int verticalSpace) {
+            return addSpaceDecoration(verticalSpace, 0);
         }
 
-        public Builder addSpaceDecoration(int verticalSpace,int horizontalSpace){
-            return addSpaceDecoration(verticalSpace,0,true);
+        public Builder addSpaceDecoration(int verticalSpace, int horizontalSpace) {
+            return addSpaceDecoration(verticalSpace, horizontalSpace, true);
         }
 
-        public Builder addSpaceDecoration(int verticalSpace,int horizontalSpace,boolean dp){
-            int spanCount=1;
-            if(manager instanceof GridLayoutManager){
-                spanCount=((GridLayoutManager)manager).getSpanCount();
+        public Builder addSpaceDecoration(int verticalSpace, int horizontalSpace, boolean dp) {
+            int spanCount = 1;
+            if (manager instanceof GridLayoutManager) {
+                spanCount = ((GridLayoutManager) manager).getSpanCount();
             }
-            if(dp){
-                verticalSpace= UnitUtil.dpToPx(recyclerView.getContext(),verticalSpace);
-                horizontalSpace= UnitUtil.dpToPx(recyclerView.getContext(),horizontalSpace);
+            if (dp) {
+                verticalSpace = UnitUtil.dpToPx(recyclerView.getContext(), verticalSpace);
+                horizontalSpace = UnitUtil.dpToPx(recyclerView.getContext(), horizontalSpace);
             }
-            this.decoration=new SpaceDecoration(verticalSpace,horizontalSpace,spanCount);
+            this.decoration = new SpaceDecoration(verticalSpace, horizontalSpace, spanCount);
             return this;
         }
 

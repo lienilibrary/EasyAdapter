@@ -236,6 +236,10 @@ public abstract class BaseEasyAdapter<E> extends RecyclerView.Adapter<EasyHolder
         }
     }
 
+    public boolean isListItem(int position) {
+        return getItemViewType(position) == ITEM_TYPE_LIST;
+    }
+
 
     @NonNull
     @Override
