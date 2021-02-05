@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements OnFirstRefreshLis
                     }
                 })
                 .setLayoutManager(new GridLayoutManager(this,2))
-                .addSpaceDecoration(40,10)
+                .addSpaceDecoration(40,100)
                 .init().firstRefresh();
     }
 

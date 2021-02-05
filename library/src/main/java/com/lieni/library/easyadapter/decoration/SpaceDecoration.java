@@ -4,8 +4,6 @@ import android.graphics.Rect;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lieni.library.easyadapter.BaseEasyAdapter;
@@ -14,9 +12,6 @@ public class SpaceDecoration extends RecyclerView.ItemDecoration {
     private int verticalSpace = 0;
     private int horizontalSpace = 0;
     private int spanCount = 0;
-    private boolean horizontal = false;
-    private boolean vertical = false;
-    private boolean showHeader = false;
 
     public SpaceDecoration() {
     }
@@ -26,8 +21,6 @@ public class SpaceDecoration extends RecyclerView.ItemDecoration {
     }
 
     public SpaceDecoration(int verticalSpace, int horizontalSpace, int spanCount) {
-        this.vertical = verticalSpace > 0;
-        this.horizontal = horizontalSpace > 0;
         this.spanCount = spanCount;
         this.verticalSpace = verticalSpace;
         this.horizontalSpace = horizontalSpace;
@@ -43,39 +36,65 @@ public class SpaceDecoration extends RecyclerView.ItemDecoration {
 //            if(manager instanceof GridLayoutManager) spanCount=((GridLayoutManager) manager).getSpanCount();
 //            else if(manager instanceof LinearLayoutManager) spanCount=1;
 //        }
+        if (parent.getAdapter() == null) return;
         int position = parent.getChildAdapterPosition(view);
-        //如果不是列表数据不添加分割线
+        int count;
         if (parent.getAdapter() instanceof BaseEasyAdapter) {
             BaseEasyAdapter adapter = (BaseEasyAdapter) parent.getAdapter();
-            if (!adapter.isListItem(position)) return;
+            count = adapter.getListData().size();
+            if (!adapter.isListItem(position)) return;//如果不是列表数据不添加分割线
+        } else {
+            count = parent.getAdapter().getItemCount();
         }
-
-        if (horizontal && vertical) {
-            outRect.left = horizontalSpace;
-            outRect.top = verticalSpace;
-        } else if (horizontal) outRect.left = horizontalSpace;
-        else if (vertical) outRect.top = verticalSpace;
-
-        if (position % spanCount == 0) outRect.left = 0;
-        if (position < spanCount && !showHeader) {
-            outRect.top = 0;
+        int lines = (int) Math.ceil((double) count / spanCount);
+        int columns = spanCount;
+        //行
+        if (lines > 1) {
+            if (isFirstLine(position)) {
+                outRect.bottom = verticalSpace / 2;
+            } else if (isLastLine(position, lines)) {
+                outRect.top = verticalSpace / 2;
+            } else {
+                outRect.top = verticalSpace / 2;
+                outRect.bottom = verticalSpace / 2;
+            }
+        }
+        //列
+        if (columns > 1) {
+            if (isFirstColumn(position, columns)) {
+                outRect.right = horizontalSpace / 2;
+            } else if (isLastColumn(position, columns)) {
+                outRect.left = horizontalSpace / 2;
+            } else {
+                outRect.left = horizontalSpace / 2;
+                outRect.right = horizontalSpace / 2;
+            }
         }
     }
 
+    private boolean isFirstLine(int position) {
+        return position / spanCount == 0;
+    }
+
+    private boolean isLastLine(int position, int lines) {
+        return position / spanCount == lines - 1;
+    }
+
+    private boolean isFirstColumn(int position, int columns) {
+        return position % columns == 0;
+    }
+
+    private boolean isLastColumn(int position, int columns) {
+        return position % columns == columns - 1;
+    }
+
     public SpaceDecoration setVerticalSpace(int verticalSpace) {
-        vertical = true;
         this.verticalSpace = verticalSpace;
         return this;
     }
 
     public SpaceDecoration setHorizontalSpace(int horizontalSpace) {
-        horizontal = true;
         this.horizontalSpace = horizontalSpace;
-        return this;
-    }
-
-    public SpaceDecoration setShowHeader(boolean showHeader) {
-        this.showHeader = showHeader;
         return this;
     }
 }
